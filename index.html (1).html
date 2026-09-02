@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Us - Out of the Archives</title>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background-color: #f0f0f0; 
+      padding: 40px 20px; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      min-height: 100vh;
+    }
+
+    .container { 
+      background: white; 
+      padding: 35px 30px; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+      width: 100%; 
+      max-width: 440px; 
+    }
+
+    h1, h2 { 
+      color: #111; 
+      margin-bottom: 8px; 
+      font-weight: 700;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    p.subtitle {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 25px;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    /* Screen Views */
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    /* Navigation Buttons */
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .nav-card {
+      display: block;
+      width: 100%;
+      padding: 14px 20px;
+      background-color: #ffffff;
+      color: #111;
+      text-align: center;
+      font-weight: 600;
+      font-size: 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .nav-card:hover {
+      border-color: #d15651;
+      color: #d15651;
+      transform: translateY(-1px);
+    }
+
+    /* Form Styles */
+    label.field-label { 
+      font-weight: 700; 
+      margin-top: 15px; 
+      display: block; 
+      font-size: 14px;
+      color: #111;
+    }
+
+    input[type="text"],
+    input[type="email"] { 
+      width: 100%; 
+      padding: 12px; 
+      margin-top: 5px; 
+      margin-bottom: 5px; 
+      border: 1px solid #ccc; 
+      border-radius: 4px; 
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      background-color: #fff;
+    }
+
+    /* Checkbox Preferences Group */
+    .checkbox-group {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #d15651;
+      cursor: pointer;
+    }
+
+    /* Validation Styles */
+    .input-group { 
+      margin-bottom: 5px; 
+    }
+
+    input.invalid { 
+      border-color: #d9534f !important; 
+      outline: none; 
+    }
+
+    input.valid { 
+      border-color: #5cb85c !important; 
+      outline: none; 
+    }
+
+    .error-text { 
+      color: #d9534f; 
+      font-size: 12px; 
+      display: none; 
+      margin-top: 2px; 
+    }
+
+    button.submit-btn { 
+      width: 100%; 
+      padding: 12px; 
+      background-color: #d15651; 
+      color: white; 
+      border: none; 
+      border-radius: 4px; 
+      font-weight: 700; 
+      font-size: 16px; 
+      cursor: pointer; 
+      margin-top: 20px;
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.2s;
+    }
+
+    button.submit-btn:hover { 
+      background-color: #b54843; 
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 13px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      font-family: 'Inter', sans-serif;
+      display: inline-block;
+    }
+
+    .back-btn:hover {
+      color: #333;
+    }
+
+    /* Thank You Message */
+    #thankYouMessage {
+      display: none;
+      color: #333;
+      padding: 15px 0;
+      text-align: center;
+      font-weight: 600;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Screen 1: Main Join Us Navigation -->
+    <div id="navigationView" class="view active">
+      <h1>Join Us</h1>
+      <p class="subtitle">Choose how you would like to get involved with Out of the Archives.</p>
+      
+      <div class="nav-links">
+        <button class="nav-card" onclick="openForm('Volunteer with Us')">Volunteer with Us</button>
+        <button class="nav-card" onclick="openForm('Become a Partner')">Become a Partner</button>
+        <button class="nav-card" onclick="openForm('Subscribe to Updates')">Subscribe to Updates</button>
+      </div>
+    </div>
+
+    <!-- Screen 2: Form View -->
+    <div id="formView" class="view">
+      <button class="back-btn" onclick="showNavigation()">← Back to options</button>
+      <h2 id="formTitle">Join Us</h2>
+      <p class="subtitle">Please enter your details below.</p>
+
+      <form id="signupForm" onsubmit="handleFormSubmit(event)">
+        <label class="field-label" for="userName">Full Name</label>
+        <input type="text" id="userName" placeholder="Juan Dela Cruz" required>
+
+        <div class="input-group">
+          <label class="field-label" for="userEmail">Email Address</label>
+          <input type="email" id="userEmail" placeholder="juan@example.com" required>
+          <span class="error-text" id="emailError">Please enter a valid email address.</span>
+        </div>
+
+        <!-- How would you like to get updates section (Only shown for Subscribe to Updates) -->
+        <div id="updatePreferencesSection" style="display: none;">
+          <label class="field-label">How would you like to get updates?</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="updateMethod" value="SMS" checked>
+              SMS
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="updateMethod" value="Email">
+              Email
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+      </form>
+
+      <!-- Thank You Box -->
+      <div id="thankYouMessage"></div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentCategory = '';
+    const emailInput = document.getElementById('userEmail');
+    const emailError = document.getElementById('emailError');
+    const updatePreferencesSection = document.getElementById('updatePreferencesSection');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Navigation Switcher
+    function openForm(category) {
+      currentCategory = category;
+      document.getElementById('formTitle').innerText = category;
+      document.getElementById('navigationView').classList.remove('active');
+      document.getElementById('formView').classList.add('active');
+      
+      // Reset form state
+      document.getElementById('signupForm').reset();
+      document.getElementById('signupForm').style.display = 'block';
+      document.getElementById('thankYouMessage').style.display = 'none';
+      emailInput.classList.remove('valid', 'invalid');
+      emailError.style.display = 'none';
+
+      // Show preferences ONLY for "Subscribe to Updates"
+      if (category === 'Subscribe to Updates') {
+        updatePreferencesSection.style.display = 'block';
+      } else {
+        updatePreferencesSection.style.display = 'none';
+      }
+    }
+
+    function showNavigation() {
+      document.getElementById('formView').classList.remove('active');
+      document.getElementById('navigationView').classList.add('active');
+    }
+
+    // Real-time Email Validation
+    emailInput.addEventListener('input', function() {
+      const emailValue = emailInput.value.trim();
+      
+      if (emailValue === '') {
+        emailInput.classList.remove('valid', 'invalid');
+        emailError.style.display = 'none';
+      } else if (emailRegex.test(emailValue)) {
+        emailInput.classList.remove('invalid');
+        emailInput.classList.add('valid');
+        emailError.style.display = 'none';
+      } else {
+        emailInput.classList.remove('valid');
+        emailInput.classList.add('invalid');
+        emailError.style.display = 'block';
+      }
+    });
+
+    // Handle Submission
+    function handleFormSubmit(event) {
+      event.preventDefault();
+
+      if (!emailRegex.test(emailInput.value.trim())) {
+        alert('Please enter a valid email address before submitting.');
+        return;
+      }
+
+      document.getElementById('signupForm').style.display = 'none';
+      const thankYouBox = document.getElementById('thankYouMessage');
+
+      // Customize thank you message based on category
+      if (currentCategory === 'Subscribe to Updates') {
+        const selectedMethods = Array.from(document.querySelectorAll('input[name="updateMethod"]:checked'))
+          .map(cb => cb.value);
+
+        let methodText = selectedMethods.length > 0 
+          ? ` via ${selectedMethods.join(' & ')}` 
+          : '';
+
+        thankYouBox.innerText = `Thank you for signing up for "${currentCategory}"! You will receive updates${methodText}.`;
+      } else {
+        thankYouBox.innerText = `Thank you for interest in "${currentCategory}"! We will contact you soon.`;
+      }
+
+      thankYouBox.style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
